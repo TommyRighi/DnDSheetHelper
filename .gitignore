@@ -1,0 +1,20 @@
+node_modules/
+dist/
+.DS_Store
+test-results/
+playwright-report/
+release/
+.env
+.env.*
+!.env.example
+.desktop-test/
+
+# Credentials, machine state and database exports
+*.pem
+*.key
+*.p12
+*.pfx
+*.dump
+*.sql.gz
+*.log
+__pycache__/

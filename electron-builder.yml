@@ -1,0 +1,32 @@
+appId: it.fable.companion
+productName: Fable
+asar: true
+electronFuses:
+  runAsNode: false
+  resetAdHocDarwinSignature: true
+directories:
+  output: release
+files:
+  - dist/**/*
+  - desktop/**/*
+  - src/**/*.js
+  - package.json
+  - '!src/**/*.test.js'
+  - '!server{,/**}'
+mac:
+  icon: desktop/icon.icns
+  category: public.app-category.games
+  target:
+    - dmg
+    - zip
+win:
+  target:
+    - nsis
+linux:
+  category: Game
+  target:
+    - AppImage
+    - deb
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true

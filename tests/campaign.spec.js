@@ -1,0 +1,150 @@
+import { test, expect } from '@playwright/test';
+const state = page => page.evaluate(() => JSON.parse(localStorage.getItem('fable-character')));
+async function campaign(page, editionId = '5e-2014') {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'La mia campagna', exact: true }).click();
+  await page.getByLabel('Nome della campagna', { exact: true }).fill('La cripta del corvo');
+  await page.getByLabel('Regolamento della campagna', { exact: true }).selectOption(editionId);
+  await page.getByLabel('Descrizione della campagna').fill('Il sigillo nella cripta.');
+  await page.getByRole('button', { name: 'Crea campagna', exact: true }).click();
+}
+async function create(page, { name = 'Mira', editionId = '5.5-2024', suggest = false } = {}) {
+  await page.getByRole('button', { name: 'Personaggio', exact: true }).click();
+  await page.getByRole('button', { name: 'Nuovo personaggio', exact: true }).click();
+  const creator = page.locator('.rules-creator');
+  await creator.getByLabel('Edizione', { exact: true }).selectOption(editionId);
+  await creator.getByLabel('Nome', { exact: true }).fill(name);
+  await creator.getByLabel('Classe base').selectOption('cleric');
+  await creator.getByRole('button', { name: 'Continua', exact: true }).click();
+  if (suggest) await creator.getByRole('button', { name: 'Assegna per classe', exact: true }).click();
+  await creator.getByRole('button', { name: 'Crea personaggio', exact: true }).click();
+}
+async function temporaryHP(page, amount) {
+  await page.getByRole('button', { name: 'Personaggio', exact: true }).click();
+  await page.getByRole('button', { name: 'Modifica scheda', exact: true }).click();
+  await page.getByLabel('PF temporanei', { exact: true }).fill(String(amount));
+  await page.getByRole('button', { name: 'Salva modifiche' }).click();
+}
+test('campaign identity, local association and edition stay consistent across player and DM views', async ({ page }) => {
+  await campaign(page);
+  await expect(page.locator('.campaign-overview h2')).toHaveText('La cripta del corvo');
+  await expect(page.getByText('Le miniere perdute', { exact: false })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Associa Thalion' }).click();
+  await expect(page.getByRole('button', { name: 'Gioca con Thalion' })).toBeVisible();
+  await page.getByRole('button', { name: 'Apri schermo del DM' }).click();
+  await expect(page.locator('.player-heading h1')).toHaveText('La cripta del corvo');
+  await expect(page.locator('.play-toolbar')).toBeHidden();
+  await page.getByRole('tab', { name: 'Incontro', exact: true }).click();
+  await expect(page.getByLabel('Regolamento dell’incontro')).toHaveValue('5e-2014');
+  await page.getByRole('button', { name: 'Archivia e crea un incontro' }).click();
+  await expect(page.getByLabel('Regolamento dell’incontro')).toHaveValue('5e-2014');
+  await page.reload();
+  await expect(page.getByRole('tab', { name: 'Incontro', exact: true })).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('.player-heading h1')).toHaveText('La cripta del corvo');
+  await page.getByRole('button', { name: 'Campagna', exact: true }).click();
+  await page.getByRole('button', { name: 'Crea personaggio', exact: true }).click();
+  await expect(page.locator('.rules-creator').getByLabel('Edizione', { exact: true })).toHaveValue('5e-2014');
+  await page.locator('.rules-creator').getByLabel('Nome', { exact: true }).fill('Lyra');
+  await page.getByRole('button', { name: 'Continua', exact: true }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'Crea personaggio', exact: true }).click();
+  const c = await state(page);
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('fable-campaign')).characterIds)).toContain(c.id);
+});
+test('DM member dialog focuses immediately and refreshing copies avoids duplicate identities', async ({ page }) => {
+  await page.setViewportSize({ width: 1366, height: 768 });
+  await campaign(page);
+  await page.getByRole('button', { name: 'Apri schermo del DM' }).click();
+  await page.getByRole('tab', { name: 'Gruppo e PNG' }).click();
+  await page.getByRole('button', { name: 'Copia personaggio attivo', exact: true }).click();
+  await page.getByRole('button', { name: 'Aggiorna copia attiva', exact: true }).click();
+  await expect(page.locator('.dm-roster-card')).toHaveCount(1);
+  await page.getByRole('button', { name: 'Nuovo PNG', exact: true }).click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog.getByLabel('Nome', { exact: true })).toBeFocused();
+  await expect(dialog.getByLabel('Tipo', { exact: true })).toHaveValue('npc');
+  await dialog.getByLabel('Nome', { exact: true }).fill('Custode');
+  await dialog.getByRole('button', { name: 'Aggiungi', exact: true }).click();
+  await expect(dialog).toBeHidden();
+  await expect(page.getByRole('button', { name: 'Nuovo PNG', exact: true })).toBeFocused();
+  await page.locator('.dm-roster-card').first().getByRole('button', { name: 'Aggiungi all’incontro' }).click();
+  await page.getByRole('tab', { name: 'Incontro', exact: true }).click();
+  await page.getByRole('button', { name: 'Danneggia Thalion' }).click();
+  await page.getByRole('button', { name: 'Aggiorna dall’archivio' }).click();
+  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('fable-dm')).encounter.members[0].hp)).toBe((await state(page)).hp);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const bounds = await page.locator('.dm-tabs').boundingBox();
+  expect(bounds.y).toBeLessThan(300);
+  await page.screenshot({ path: test.info().outputPath('dm-desktop.png') });
+});
+test('temporary HP is consumed consistently from Gioca and the embedded table controls', async ({ page }) => {
+  await page.route('https://table.example/**', route => route.fulfill({ body: '<p>Tavolo di prova</p>', contentType: 'text/html' }));
+  await page.goto('/');
+  await create(page);
+  await temporaryHP(page, 5);
+  await page.getByLabel('Quantità danni o guarigione').fill('7');
+  await page.getByRole('button', { name: 'Subisci danni', exact: true }).click();
+  const expected = await state(page);
+  await page.getByRole('button', { name: 'Recupera punti ferita', exact: true }).click();
+  await temporaryHP(page, 5);
+  await page.getByRole('button', { name: 'La mia campagna', exact: true }).click();
+  await page.getByLabel('Link alla sessione').fill('https://table.example/session');
+  await page.getByRole('button', { name: 'Salva collegamento' }).click();
+  await page.getByRole('button', { name: 'Apri nell’app', exact: true }).click();
+  await page.locator('.session-quick-tools button').first().click();
+  await page.getByRole('spinbutton', { name: 'Quantità', exact: true }).fill('7');
+  await page.getByRole('button', { name: 'Subisci danni', exact: true }).click();
+  const actual = await state(page);
+  expect([actual.hp, actual.rules.tempHp]).toEqual([expected.hp, expected.rules.tempHp]);
+});
+test('class suggestions and capability editing preserve explicit choices and consumed uses', async ({ page }) => {
+  await page.goto('/');
+  await create(page, { suggest: true });
+  expect((await state(page)).stats[4]).toBe(15);
+  await expect(page.locator('.character-preparation')).toBeVisible();
+  await page.locator('.play-toolbar').getByRole('button', { name: 'Incantesimi', exact: true }).click();
+  await page.getByRole('textbox', { name: 'Nome', exact: true }).fill('Cura di prova');
+  await page.getByLabel('Formula di riferimento', { exact: true }).fill('2d8');
+  await page.getByRole('button', { name: 'Aggiungi capacità' }).click();
+  await page.getByRole('button', { name: 'Segna uso', exact: true }).click();
+  expect((await state(page)).rules.slotUsed).toEqual({});
+  await page.getByRole('button', { name: 'Modifica capacità' }).click();
+  await page.getByRole('textbox', { name: 'Nome', exact: true }).fill('Cura corretta');
+  await page.getByRole('button', { name: 'Salva capacità' }).click();
+  expect((await state(page)).rules.abilities[0].used).toBe(1);
+  await page.getByRole('button', { name: 'Tira formula' }).click();
+  await expect.poll(async () => (await state(page)).logs.length).toBe(1);
+  expect((await state(page)).logs[0].label).toBe('Cura corretta');
+});
+
+test('legacy roster names require an explicit choice instead of silently creating duplicates', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Schermo del DM', exact: true }).click();
+  await page.getByRole('tab', { name: 'Gruppo e PNG' }).click();
+  await expect(page.locator('.dm-roster-card')).toHaveCount(3);
+  await page.getByRole('button', { name: 'Copia personaggio attivo', exact: true }).click();
+  await expect(page.getByRole('region', { name: 'Copia già presente' })).toBeVisible();
+  await expect(page.locator('.dm-roster-card')).toHaveCount(3);
+  await page.getByRole('button', { name: 'Aggiorna Thalion', exact: false }).click();
+  await expect(page.locator('.dm-roster-card')).toHaveCount(3);
+  await page.getByRole('button', { name: 'Aggiorna copia attiva', exact: true }).click();
+  await expect(page.locator('.dm-roster-card')).toHaveCount(3);
+});
+
+test('campaign setup and the member dialog reflow on a narrow screen', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Personaggio', exact: true }).click();
+  await page.getByRole('button', { name: 'La mia campagna', exact: true }).click();
+  await page.getByLabel('Nome della campagna', { exact: true }).fill('Campagna mobile');
+  await page.getByRole('button', { name: 'Crea campagna', exact: true }).click();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await page.getByRole('button', { name: 'Apri schermo del DM' }).click();
+  await page.getByRole('tab', { name: 'Gruppo e PNG' }).click();
+  await page.getByRole('button', { name: 'Nuovo PNG', exact: true }).click();
+  const dialog = page.getByRole('dialog');
+  await expect(dialog.getByLabel('Nome', { exact: true })).toBeFocused();
+  const rect = await dialog.boundingBox();
+  expect(rect.x).toBeGreaterThanOrEqual(0);
+  expect(rect.x + rect.width).toBeLessThanOrEqual(320);
+  await page.screenshot({ path: test.info().outputPath('member-mobile.png') });
+});

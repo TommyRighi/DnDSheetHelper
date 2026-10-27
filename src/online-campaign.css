@@ -1,0 +1,49 @@
+.online-campaign { display: grid; gap: 18px; margin-bottom: 24px; }
+.online-campaign .panel, .shared-roster { padding: 24px; }
+.shared-section-heading { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px; }
+.shared-section-heading h2, .online-campaign-heading h2 { margin: 5px 0 0; font: 600 32px/1.1 "Cormorant Garamond", serif; }
+.online-campaign p, .shared-roster > p { font-size: 13px; line-height: 1.7; color: var(--muted); margin: 12px 0 18px; }
+.online-form { display: grid; gap: 16px; }
+.online-form h3, .online-invite h3 { display: flex; align-items: center; gap: 9px; }
+.online-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.online-account-summary { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.online-connect { margin-top: 20px; border-top: 1px solid var(--line); padding-top: 18px; }
+.online-connect summary { cursor: pointer; font-size: 13px; margin-bottom: 20px; }
+.online-connect-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; }
+.online-connect-columns > form:first-child { align-content: start; padding-right: 30px; border-right: 1px solid var(--line); }
+.online-campaign-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-left: 3px solid var(--green); }
+.online-status { flex-shrink: 0; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+.online-status::before { content: ''; width: 6px; height: 6px; background: currentColor; border-radius: 50%; }
+.online-status.is-connected { color: var(--green); }
+.online-conflict { border-color: var(--green); }
+.shared-roster-list { display: grid; gap: 16px; margin-top: 22px; }
+.shared-character { border-top: 1px solid var(--line); padding: 20px 0 0; }
+.shared-character-identity { display: flex; align-items: center; gap: 14px; }
+.shared-character-avatar { width: 45px; height: 45px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--green); font: 600 28px/1 "Cormorant Garamond", serif; }
+.shared-character h3 { font-size: 18px; margin: 0 0 5px; }
+.shared-character small { color: var(--muted); font-size: 12px; }
+.shared-character-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin: 20px 0; }
+.shared-character-stats dt { font-size: 10px; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+.shared-character-stats dd { margin: 0; color: var(--text); font: 600 28px/1 "Cormorant Garamond", serif; }
+.shared-character-stats dd small { margin-left: 3px; }
+.shared-character footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.online-member { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; gap: 15px; border-bottom: 1px solid var(--line); }
+.shared-sheet-dialog { width: min(1120px, calc(100vw - 32px)); max-width: none; }
+.shared-sheet-dialog .character-sheet-view { display: block; }
+.shared-sheet-dialog fieldset { border: 0; min-width: 0; margin: 0; padding: 0; }
+.shared-sheet-dialog .sheet-input, .shared-sheet-dialog .sheet-input-error { display: none !important; }
+.shared-sheet-dialog .sheet-print-value { display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
+.shared-sheet-dialog .sheet-name-inputs > .sheet-editable { flex: 0 1 auto; }
+.shared-sheet-dialog .sheet-print-value { font: inherit; }
+.shared-sheet-dialog .sheet-editable-multiline .sheet-print-value { font-size: 11px; line-height: 1.7; }
+@media (max-width: 650px) {
+  .online-campaign .panel, .shared-roster { padding: 18px; }
+  .online-connect-columns { grid-template-columns: 1fr; gap: 26px; }
+  .online-connect-columns > form:first-child { border: 0; border-bottom: 1px solid var(--line); padding: 0 0 26px; }
+  .online-campaign-heading { flex-direction: column; align-items: start; gap: 16px; }
+  .online-actions .button { min-height: 44px; }
+  .shared-character-stats { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .online-campaign input, .online-campaign select, .online-campaign textarea { font-size: 16px; }
+}
+.shared-character-resources, .shared-character-effects { font-size: 12px; line-height: 1.6; color: var(--muted); margin: 10px 0 16px; }
+.shared-sheet-dialog .sheet-mobile-index { display: none; }

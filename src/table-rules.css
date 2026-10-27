@@ -1,0 +1,97 @@
+.table-rules-strip { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 14px 18px; border: 1px dashed var(--line); border-radius: 9px; margin-bottom: 22px; background: color-mix(in srgb, var(--accent) 4%, var(--panel)); }
+.table-rules-strip > div > strong { display: block; font-size: 13px; font-weight: 500; }
+.table-rules-strip small { display: block; color: var(--muted); font-size: 11px; margin-top: 5px; line-height: 1.6; }
+.table-rules-strip .button { font-size: 11px; }
+.table-effects { display: flex; flex-wrap: wrap; gap: 7px; width: 100%; }
+.table-effect { font-size: 11px; line-height: 1.6; padding: 5px 9px; border: 1px solid var(--line); border-radius: 6px; color: var(--accent); overflow-wrap: anywhere; }
+.table-resources { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+.table-resource { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 12px; }
+.table-resource > div { flex: 1; min-width: 100px; overflow-wrap: anywhere; }
+.table-resource strong { font-weight: 500; }
+.table-resource .button { min-height: 36px; }
+.rules-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-block: 20px; }
+.rules-tabs button { flex: 1; padding: 12px 4px; color: var(--muted); font-size: 12px; border-bottom: 2px solid transparent; }
+.rules-tabs [aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+.rules-calculation { color: var(--accent); background: var(--bg); padding: 12px; font-size: 12px; border-radius: 6px; line-height: 1.7; overflow-wrap: anywhere; }
+.rules-subtitle { font-size: 24px; margin: 26px 0 12px; }
+.rules-entry { display: flex; align-items: center; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.rules-entry > div { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.rules-entry strong { font-weight: 500; }
+.rules-entry small { display: block; color: var(--muted); font-size: 11px; line-height: 1.7; margin-top: 5px; }
+.rules-entry p { font-size: 12px; line-height: 1.7; }
+.rules-empty, .rules-hint { font-size: 12px; color: var(--muted); line-height: 1.7; margin-block: 12px; }
+.rules-resource-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 12px; }
+.rules-error { color: var(--text); border-left: 3px solid var(--accent); padding: 12px; margin-top: 18px; font-size: 12px; background: var(--bg); }
+.rest-options { display: flex; flex-direction: column; gap: 14px; margin-block: 20px; }
+.rest-options label { display: flex; align-items: center; gap: 10px; font-size: 13px; line-height: 1.6; cursor: pointer; }
+.rest-options input { accent-color: var(--accent); width: 18px; height: 18px; flex-shrink: 0; }
+.rest-effects { font-size: 12px; line-height: 1.8; padding: 12px; background: var(--bg); border-radius: 7px; overflow-wrap: anywhere; }
+.modified-value { font-size: 10px; color: var(--accent); line-height: 1.7; margin-top: 6px; overflow-wrap: anywhere; }
+@media (max-width: 650px) { .table-rules-strip { padding: 14px; } .table-rules-strip > .button { width: 100%; } }
+@media print { .table-rules-strip { display: none !important; } }
+
+/* A compact utility panel, independent of the narrative dialogs. */
+.modal.settings-modal {
+  width: 460px;
+  padding: 20px;
+  max-height: calc(100dvh - 32px);
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+.settings-modal .modal-close { top: 12px; right: 12px; width: 32px; height: 32px; }
+.settings-modal .rules-title { display: flex; align-items: center; gap: 9px; padding-right: 30px; color: var(--accent); }
+.settings-modal .rules-title h2 { font-family: inherit; font-size: 19px; font-weight: 600; line-height: 1.3; margin: 0; color: var(--text); letter-spacing: -.25px; }
+.rules-settings-header > p { font-size: 12px; line-height: 1.5; color: var(--muted); margin: 7px 0 12px; }
+.settings-modal .language-select { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--muted); margin: 12px 0; }
+.language-select select { color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 5px; padding: 6px 26px 6px 9px; font: inherit; min-height: 34px; }
+.settings-modal .rules-tabs { margin: 12px 0 16px; gap: 12px; }
+.settings-modal .rules-tabs button { min-height: 40px; padding: 8px 0; font-size: 12px; }
+.settings-modal .field { margin: 0 0 12px; gap: 5px; font-size: 12px; line-height: 1.4; }
+.settings-modal .field input, .settings-modal .field select { padding: 8px 10px; min-height: 38px; font-size: 14px; min-width: 0; }
+.settings-modal .button { min-height: 38px; padding: 8px 14px; font-size: 12px; margin-top: 0; }
+.settings-modal > .button.full { margin-block: 10px; }
+.settings-modal > p { margin: 12px 0; font-size: 12px; line-height: 1.6; }
+.rules-current { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; margin-bottom: 14px; }
+.rules-current > div { min-width: 0; }
+.rules-current span { font-size: 12px; color: var(--muted); }
+.rules-current small { display: block; font-size: 11px; line-height: 1.5; color: var(--muted); margin-top: 3px; overflow-wrap: anywhere; }
+.rules-current output { color: var(--accent); font-size: 26px; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+.rules-edit-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: end; margin-bottom: 12px; }
+.settings-modal .rules-edit-row .field { margin: 0; }
+.settings-modal .rules-edit-row .button { min-width: 84px; }
+.settings-modal .rules-note { position: relative; }
+.rules-note > span { position: absolute; right: 0; color: var(--muted); font-weight: 400; font-size: 11px; }
+.rules-details { border-top: 1px solid var(--line); margin-top: 16px; }
+.rules-details summary { padding: 12px 0; font-size: 12px; color: var(--text); cursor: pointer; }
+.rules-details summary > span { display: inline-block; font-variant-numeric: tabular-nums; padding: 1px 6px; margin-left: 4px; border-radius: 4px; background: var(--bg); color: var(--muted); }
+.rules-details > form { margin-top: 12px; }
+.settings-modal .rules-subtitle { font-family: inherit; font-size: 12px; font-weight: 500; margin: 18px 0 4px; color: var(--muted); }
+.settings-modal .rules-entry { padding: 10px 0; font-size: 12px; }
+.settings-modal .rules-entry p { margin: 5px 0 0; }
+.settings-modal .rules-entry small { margin-top: 3px; line-height: 1.5; }
+.settings-modal .rules-resource-fields { gap: 10px; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); }
+.settings-modal .rules-empty, .settings-modal .rules-hint { font-size: 12px; line-height: 1.5; margin: 0 0 12px; }
+.rules-settings-footer { border-top: 1px solid var(--line); padding-top: 10px; margin-top: 4px; }
+.rules-feedback { display: flex; align-items: center; gap: 5px; min-height: 18px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+.settings-modal .rules-error { margin: 0; padding: 8px 10px; font-size: 12px; }
+.settings-modal :is(button, select, input, summary):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 650px) {
+  .modal.settings-modal { padding: 16px; max-height: calc(100dvh - 24px); width: 420px; }
+  .settings-modal .rules-title h2 { font-size: 18px; }
+  .settings-modal .rules-tabs { gap: 8px; margin-bottom: 14px; }
+  .settings-modal .field input, .settings-modal .field select, .language-select select { font-size: 16px; min-height: 40px; }
+  .settings-modal .button, .settings-modal .rules-tabs button { min-height: 44px; }
+  .settings-modal .modal-close { width: 36px; height: 36px; top: 8px; right: 8px; }
+  .settings-modal .rules-entry .icon-button { width: 44px; height: 44px; }
+}
+.rules-settings-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-right: 30px; margin-bottom: 12px; }
+.rules-settings-header .rules-title { padding-right: 0; }
+@media (max-width: 360px) {
+  .rules-settings-header { flex-wrap: wrap; }
+}
+
+.topbar-right .language-select { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+.topbar-right .language-select > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 600px) {
+  .topbar-right .language-select select { min-height: 40px; font-size: 16px; max-width: 105px; }
+}

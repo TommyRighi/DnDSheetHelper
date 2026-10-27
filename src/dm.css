@@ -1,0 +1,1040 @@
+.dm-console {
+  margin-bottom: 25px;
+}
+.dm-command {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 27px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background:
+    radial-gradient(ellipse at top right, #a78c4530, transparent 65%),
+    var(--panel);
+}
+.dm-insignia {
+  height: 62px;
+  width: 56px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #9d8b5b;
+  border-radius: 6px 6px 24px 24px;
+  color: #c3aa77;
+  background: #9a7f2b16;
+  flex-shrink: 0;
+}
+.dm-command h2 {
+  font-size: 34px;
+  line-height: 1.2;
+  margin: 5px 0 9px;
+}
+.dm-command p {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.dm-command-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 180px;
+}
+.dm-command-actions .button {
+  font-size: 10px;
+  width: 100%;
+}
+.dm-summary {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  padding: 18px 5px;
+  color: var(--muted);
+  font-size: 10px;
+}
+.dm-summary > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.dm-summary svg {
+  color: var(--green);
+}
+.dm-summary strong {
+  font-weight: 600;
+  color: var(--text);
+}
+.dm-local {
+  margin-left: auto;
+  font-size: 9px;
+}
+.dm-local > span {
+  height: 5px;
+  width: 5px;
+  background: var(--green);
+  border-radius: 50%;
+}
+.dm-tabs {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  border-bottom: 1px solid var(--line);
+  margin: 5px 0 25px;
+}
+.dm-tabs > button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 1px;
+  font-size: 12px;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+}
+.dm-tabs > button.active {
+  border-color: var(--gold);
+  color: var(--text);
+}
+.dm-tabs .dm-dice-button {
+  margin-left: auto;
+  color: var(--green);
+}
+.dm-prep-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 20px;
+}
+.dm-main-column,
+.dm-side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.dm-editor {
+  padding: 0 22px 20px;
+}
+.dm-editor .panel-heading {
+  padding: 22px 0 10px;
+  justify-content: space-between;
+}
+.dm-editor .panel-heading h3 {
+  white-space: normal;
+  font-size: 27px;
+}
+.dm-editor .field {
+  margin: 14px 0;
+}
+.dm-session-fields {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 14px;
+}
+.dm-editor textarea,
+.dm-roster-card textarea {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 12px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.9;
+  min-height: 150px;
+  resize: vertical;
+  width: 100%;
+}
+.dm-editor > p {
+  font-size: 10px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.dm-secrets {
+  border-color: #8f774947;
+}
+.dm-secrets .panel-heading svg {
+  color: var(--gold);
+}
+.dm-secrets textarea {
+  min-height: 180px;
+}
+.dm-checklist {
+  padding: 0 18px 18px;
+}
+.dm-checklist .panel-heading {
+  padding: 22px 0 17px;
+}
+.dm-checklist h3 {
+  font-size: 25px;
+}
+.dm-task {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.dm-task label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--text);
+  cursor: pointer;
+}
+.dm-task input {
+  accent-color: #9da982;
+  margin: 5px 0 0;
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+.dm-task input:checked + span {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+.dm-add-task {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 5px 7px;
+  margin-top: 16px;
+  background: var(--bg);
+}
+.dm-add-task input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 10px;
+  padding: 7px;
+}
+.dm-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0 5px;
+  color: var(--muted);
+}
+.dm-note p {
+  font-size: 9px;
+  line-height: 1.8;
+}
+.dm-note svg {
+  color: var(--gold);
+  margin-top: 3px;
+}
+.dm-message {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 15px;
+  background: #7d966f19;
+  border: 1px solid #7d966f66;
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--green);
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+.dm-message > button {
+  margin-left: auto;
+  font-size: 18px;
+}
+.dm-encounter {
+  padding: 24px;
+}
+.dm-encounter-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+.dm-encounter-heading > .dm-round {
+  flex-shrink: 0;
+}
+.dm-encounter-heading > .dm-round + div {
+  flex: 1;
+}
+.dm-encounter-heading > div:first-child {
+  flex: 1;
+  max-width: 550px;
+}
+.dm-encounter-heading .field {
+  margin: 12px 0 18px;
+}
+.dm-encounter-heading .field > input {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 30px;
+  padding: 7px 12px;
+}
+.dm-round {
+  height: 78px;
+  min-width: 80px;
+  border: 1px solid #9a875352;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #9a875310;
+}
+.dm-round > span {
+  font-size: 8px;
+  letter-spacing: 1.4px;
+  color: var(--gold);
+}
+.dm-round > strong {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 38px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+.dm-combat-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 0 20px;
+  border-bottom: 1px solid var(--line);
+}
+.dm-combat-controls .button {
+  font-size: 10px;
+}
+.dm-current-turn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 0 0;
+  font-size: 12px;
+  color: var(--green);
+}
+.dm-current-turn > span:last-child {
+  margin-left: auto;
+  font-size: 9px;
+  color: var(--muted);
+}
+.dm-hp-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 3px 0 17px;
+}
+.dm-hp-controls .field {
+  width: 130px;
+  flex-shrink: 0;
+  font-size: 9px;
+}
+.dm-hp-controls .field input {
+  padding: 8px 10px;
+  font-size: 12px;
+}
+.dm-hp-controls p {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 520px;
+}
+.dm-combat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dm-combatant {
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 15px;
+  background: var(--bg);
+}
+.dm-combatant.is-current {
+  border-color: var(--gold);
+  box-shadow: inset 3px 0 var(--gold);
+  background: linear-gradient(90deg, #af975c12, transparent 70%), var(--bg);
+}
+.dm-combatant.is-down .dm-combatant-name h4 {
+  color: var(--muted);
+}
+.dm-combatant-main {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+}
+.dm-initiative {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 7px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.dm-initiative input {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 18px;
+  text-align: center;
+  padding: 6px 2px;
+  width: 54px;
+  font-family: "DM Sans", sans-serif;
+}
+.dm-combatant-name {
+  flex: 1;
+  min-width: 80px;
+}
+.dm-combatant-name h4 {
+  font-size: 13px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.dm-combatant-name > small {
+  display: block;
+  color: var(--muted);
+  font-size: 9px;
+  margin-top: 5px;
+}
+.dm-hp-track {
+  height: 3px;
+  width: 100%;
+  max-width: 200px;
+  background: #7d8e5e29;
+  border-radius: 3px;
+  margin-top: 12px;
+}
+.dm-hp-track > i {
+  display: block;
+  height: 100%;
+  background: var(--green);
+  border-radius: 3px;
+}
+.dm-hp-value {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  white-space: nowrap;
+}
+.dm-hp-value > svg {
+  align-self: center;
+  color: var(--green);
+  margin-right: 3px;
+}
+.dm-hp-value > strong {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 30px;
+  font-weight: 500;
+}
+.dm-hp-value > span {
+  font-size: 10px;
+  color: var(--muted);
+}
+.dm-hp-buttons {
+  display: flex;
+  gap: 7px;
+}
+.dm-hp-buttons > button {
+  font-size: 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 8px;
+  background: var(--panel);
+  white-space: nowrap;
+}
+.dm-hp-buttons > button:first-child {
+  color: #cf9e8a;
+}
+.dm-hp-buttons > button:last-child {
+  color: var(--green);
+}
+.dm-condition-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  padding-left: 71px;
+  margin-top: 12px;
+}
+.dm-condition-row > button {
+  font-size: 9px;
+  border: 1px solid #a38e5e66;
+  border-radius: 3px;
+  padding: 4px 7px;
+  color: var(--gold);
+  background: #a38e5e0d;
+}
+.dm-condition-row > select {
+  font: inherit;
+  font-size: 9px;
+  color: var(--muted);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 4px 7px;
+  max-width: 160px;
+}
+.dm-add-combatant {
+  display: flex;
+  align-items: flex-end;
+  gap: 15px;
+  padding: 12px 0 0;
+}
+.dm-add-combatant .field {
+  margin-bottom: 0;
+  flex: 1;
+  max-width: 380px;
+}
+.dm-footnote {
+  font-size: 10px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-top: 22px;
+}
+.dm-roster-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 23px;
+  flex-wrap: wrap;
+}
+.dm-roster-heading > div {
+  flex: 1;
+  min-width: 220px;
+}
+.dm-roster-heading h3 {
+  font-size: 27px;
+}
+.dm-roster-heading p {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 7px;
+  line-height: 1.7;
+}
+.dm-roster-heading .button {
+  font-size: 10px;
+}
+.dm-roster {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 17px;
+}
+.dm-roster-card {
+  padding: 19px;
+}
+.dm-roster-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dm-kind {
+  font-size: 8px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid #9a87534a;
+  border-radius: 3px;
+  padding: 5px 8px;
+}
+.dm-kind.player {
+  color: var(--green);
+  border-color: #9eb27a44;
+}
+.dm-kind.enemy {
+  color: #cf9e8a;
+  border-color: #cf9e8a44;
+}
+.dm-roster-card .field {
+  font-size: 9px;
+  margin: 14px 0;
+}
+.dm-roster-card .field input {
+  font-size: 11px;
+  padding: 9px;
+}
+.dm-roster-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 10px;
+}
+.dm-roster-stats .field {
+  font-size: 8px;
+}
+.dm-roster-card textarea {
+  font-size: 10px;
+  min-height: 110px;
+  padding: 9px;
+}
+.dm-roster-card .button {
+  font-size: 10px;
+}
+.dm-new-member {
+  margin-top: 22px;
+  padding: 24px;
+}
+.dm-new-member h3 {
+  font-size: 28px;
+}
+.dm-new-fields {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 14px;
+}
+.dm-new-fields .field {
+  font-size: 10px;
+}
+.dm-new-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.mixed-dice {
+  border-top: 1px solid var(--line);
+  margin-top: 26px;
+  padding-top: 6px;
+}
+.mixed-dice > p,
+.mixed-dice > small {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.mixed-dice > small {
+  display: block;
+  margin-top: 11px;
+}
+.mixed-dice .field input {
+  font-family: "DM Sans", sans-serif;
+  letter-spacing: 0.8px;
+}
+.dice-copy-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.dice-copy-actions .button {
+  flex: 1;
+  font-size: 10px;
+}
+@media (max-width: 1150px) {
+  .dm-prep-grid {
+    grid-template-columns: 1.3fr 1fr;
+    gap: 15px;
+  }
+  .dm-roster {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .dm-session-fields {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .dm-command {
+    padding: 22px;
+    gap: 16px;
+  }
+  .dm-command h2 {
+    font-size: 30px;
+  }
+  .dm-command-actions {
+    max-width: 155px;
+  }
+  .dm-summary {
+    gap: 15px;
+  }
+  .dm-combatant-main {
+    gap: 12px;
+  }
+  .dm-current-turn > span:last-child {
+    max-width: 220px;
+    font-size: 8px;
+  }
+  .dm-new-fields {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .dm-new-fields > .field:first-child {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 960px) {
+  .dm-prep-grid {
+    grid-template-columns: 1fr;
+  }
+  .dm-side-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 15px;
+  }
+  .dm-note {
+    grid-column: 1/-1;
+  }
+  .dm-command {
+    flex-wrap: wrap;
+  }
+  .dm-command-actions {
+    flex-direction: row;
+    max-width: none;
+    width: 100%;
+    justify-content: flex-start;
+    padding-left: 72px;
+  }
+  .dm-command-actions .button {
+    width: auto;
+  }
+  .dm-command h2 {
+    font-size: 29px;
+  }
+  .dm-local {
+    margin-left: 0;
+  }
+  .dm-tabs {
+    gap: 20px;
+  }
+  .dm-tabs > button {
+    font-size: 11px;
+  }
+  .dm-current-turn {
+    flex-wrap: wrap;
+  }
+  .dm-current-turn > span:last-child {
+    max-width: none;
+    width: 100%;
+    margin-top: 3px;
+    margin-left: 14px;
+  }
+  .dm-hp-buttons {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .dm-hp-buttons > button {
+    padding: 6px;
+  }
+  .dm-hp-value > svg {
+    display: none;
+  }
+  .dm-combatant-main {
+    gap: 12px;
+  }
+  .dm-condition-row {
+    padding-left: 66px;
+  }
+  .dm-roster-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 650px) {
+  .dm-command {
+    padding: 19px;
+    gap: 13px;
+    align-items: flex-start;
+  }
+  .dm-insignia {
+    width: 38px;
+    height: 47px;
+  }
+  .dm-insignia > svg {
+    width: 22px;
+  }
+  .dm-command > div:nth-child(2) {
+    flex: 1;
+    min-width: 0;
+  }
+  .dm-command h2 {
+    font-size: 28px;
+  }
+  .dm-command p {
+    font-size: 10px;
+    line-height: 1.7;
+  }
+  .dm-command-actions {
+    padding-left: 0;
+    gap: 7px;
+  }
+  .dm-command-actions .button {
+    font-size: 8px;
+    flex: 1;
+  }
+  .dm-summary {
+    gap: 13px 18px;
+    padding: 19px 3px;
+    font-size: 9px;
+  }
+  .dm-summary svg {
+    width: 14px;
+  }
+  .dm-summary .dm-local {
+    font-size: 8px;
+  }
+  .dm-tabs {
+    gap: 13px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .dm-tabs > button {
+    font-size: 9px;
+    gap: 5px;
+    padding: 12px 0;
+  }
+  .dm-tabs > button > svg {
+    width: 13px;
+  }
+  .dm-tabs .dm-dice-button {
+    font-size: 9px;
+    gap: 4px;
+  }
+  .dm-prep-grid {
+    gap: 15px;
+  }
+  .dm-side-column {
+    display: flex;
+  }
+  .dm-editor {
+    padding: 0 16px 16px;
+  }
+  .dm-editor .panel-heading {
+    padding-top: 20px;
+  }
+  .dm-editor .panel-heading h3 {
+    font-size: 25px;
+  }
+  .dm-editor .field {
+    font-size: 10px;
+  }
+  .dm-editor .field input {
+    font-size: 11px;
+  }
+  .dm-editor textarea {
+    font-size: 11px;
+    min-height: 170px;
+  }
+  .dm-checklist {
+    padding: 0 16px 16px;
+  }
+  .dm-checklist .panel-heading h3 {
+    font-size: 25px;
+  }
+  .dm-task label {
+    font-size: 10px;
+  }
+  .dm-encounter {
+    padding: 17px 13px;
+  }
+  .dm-encounter-heading {
+    gap: 12px;
+  }
+  .dm-encounter-heading .eyebrow {
+    font-size: 6px;
+    letter-spacing: 1px;
+  }
+  .dm-encounter-heading .field {
+    font-size: 9px;
+  }
+  .dm-encounter-heading .field > input {
+    font-size: 23px;
+    padding: 8px;
+    min-width: 0;
+  }
+  .dm-round {
+    min-width: 51px;
+    height: 64px;
+  }
+  .dm-round > span {
+    font-size: 6px;
+    letter-spacing: 1px;
+  }
+  .dm-round > strong {
+    font-size: 30px;
+  }
+  .dm-combat-controls {
+    gap: 7px;
+  }
+  .dm-combat-controls .button {
+    font-size: 8px;
+    gap: 5px;
+    padding: 8px;
+    min-height: 33px;
+  }
+  .dm-combat-controls svg {
+    width: 12px;
+  }
+  .dm-current-turn {
+    font-size: 11px;
+  }
+  .dm-current-turn > span:last-child {
+    font-size: 8px;
+    line-height: 1.7;
+  }
+  .dm-hp-controls {
+    gap: 12px;
+    align-items: center;
+  }
+  .dm-hp-controls .field {
+    width: 90px;
+    font-size: 8px;
+  }
+  .dm-hp-controls p {
+    font-size: 8px;
+  }
+  .dm-combatant {
+    padding: 12px 10px;
+  }
+  .dm-combatant-main {
+    gap: 9px;
+    flex-wrap: wrap;
+  }
+  .dm-initiative input {
+    width: 39px;
+    font-size: 16px;
+    padding: 6px 0;
+  }
+  .dm-initiative {
+    font-size: 6px;
+  }
+  .dm-combatant-name {
+    min-width: 65px;
+    flex: 1;
+  }
+  .dm-combatant-name h4 {
+    font-size: 10px;
+  }
+  .dm-combatant-name > small {
+    font-size: 7px;
+    line-height: 1.5;
+  }
+  .dm-hp-value {
+    gap: 3px;
+  }
+  .dm-hp-value > strong {
+    font-size: 26px;
+  }
+  .dm-hp-value > span {
+    font-size: 8px;
+  }
+  .dm-hp-buttons {
+    flex-direction: row;
+    width: 100%;
+    order: 6;
+    margin-left: 48px;
+  }
+  .dm-hp-buttons > button {
+    font-size: 9px;
+    padding: 7px 11px;
+  }
+  .dm-combatant-main > .icon-button {
+    padding: 3px;
+  }
+  .dm-combatant-main > .icon-button svg {
+    width: 12px;
+  }
+  .dm-condition-row {
+    padding-left: 48px;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  .dm-condition-row > button,
+  .dm-condition-row > select {
+    font-size: 8px;
+  }
+  .dm-add-combatant {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .dm-add-combatant .field {
+    max-width: none;
+    width: 100%;
+    flex: auto;
+    font-size: 9px;
+  }
+  .dm-add-combatant .field select {
+    font-size: 10px;
+  }
+  .dm-add-combatant .button {
+    font-size: 9px;
+  }
+  .dm-footnote {
+    font-size: 9px;
+  }
+  .dm-roster-heading h3 {
+    font-size: 25px;
+  }
+  .dm-roster-heading .button {
+    font-size: 9px;
+  }
+  .dm-roster {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .dm-roster-card {
+    padding: 18px;
+  }
+  .dm-roster-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .dm-new-member {
+    padding: 18px;
+  }
+  .dm-new-member h3 {
+    font-size: 25px;
+  }
+  .dm-new-fields {
+    grid-template-columns: 1fr 1fr;
+    gap: 0 12px;
+  }
+  .dm-new-fields > .field:first-child {
+    grid-column: 1/-1;
+  }
+  .dm-new-fields .field {
+    font-size: 9px;
+  }
+  .dm-new-fields .field input,
+  .dm-new-fields .field select {
+    padding: 10px 8px;
+    font-size: 11px;
+  }
+  .mixed-dice > p,
+  .mixed-dice > small {
+    font-size: 9px;
+  }
+  .dice-copy-actions .button {
+    font-size: 9px;
+  }
+}
+.roll-result {
+  max-width: min(420px, calc(100vw - 90px));
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+}
+.roll-result strong > span {
+  max-width: 240px;
+  overflow-wrap: anywhere;
+}
+.dm-encounter-archive {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+}
+.dm-encounter-archive > .field {
+  flex: 1;
+  min-width: 180px;
+  font-size: 10px;
+}
+.dm-encounter-archive > .button {
+  font-size: 10px;
+  margin-top: 20px;
+}
+@media (max-width: 650px) {
+  .dm-encounter-archive > .field {
+    width: 100%;
+    min-width: 0;
+    flex: auto;
+  }
+  .dm-encounter-archive > .button {
+    margin-top: 0;
+    font-size: 9px;
+    width: 100%;
+  }
+}

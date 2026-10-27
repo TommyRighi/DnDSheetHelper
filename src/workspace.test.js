@@ -1,0 +1,32 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { createCharacter } from './rules/engine.js';
+import { exportWorkspace, restoreWorkspace, validateWorkspace } from './workspace.js';
+const memory = () => { const map = new Map(); return { getItem: key => map.get(key) ?? null, setItem: (key, value) => map.set(key, value), removeItem: key => map.delete(key) }; };
+const workspace = name => ({ schemaVersion: 1, data: { 'fable-character': JSON.stringify(createCharacter({ name, classId: 'cleric' })) } });
+test('full backups validate records and never include service credentials or recovery originals', () => {
+  const storage = memory();
+  storage.setItem('fable-character', workspace('Mira').data['fable-character']);
+  storage.setItem('fable-api-token', 'private');
+  storage.setItem('fable-supabase-auth', 'private-session');
+  storage.setItem('fable-sync:user:campaign', 'private-metadata');
+  storage.setItem('fable-online-campaign', 'campaign-id');
+  storage.setItem('fable-character-unreadable', 'private-original');
+  const backup = exportWorkspace(storage);
+  assert.deepEqual(Object.keys(backup.data), ['fable-character']);
+  assert.throws(() => validateWorkspace({ ...backup, data: { ...backup.data, 'fable-api-token': 'x' } }));
+  assert.throws(() => validateWorkspace({ ...backup, data: { 'fable-character': '{}' } }));
+});
+test('restore validates before writes, preserves a recovery copy and rolls back failed commits', () => {
+  const storage = memory(), old = workspace('Mira'), next = workspace('Lyra');
+  storage.setItem('fable-character', old.data['fable-character']);
+  assert.throws(() => restoreWorkspace(storage, {}));
+  assert.equal(exportWorkspace(storage).data['fable-character'], old.data['fable-character']);
+  restoreWorkspace(storage, next);
+  assert.equal(exportWorkspace(storage).data['fable-character'], next.data['fable-character']);
+  assert.equal(JSON.parse(storage.getItem('fable-workspace-before-restore')).data['fable-character'], old.data['fable-character']);
+  let fail = true;
+  const failing = { ...storage, setItem: (key, value) => { if (key === 'fable-character' && fail) { fail = false; throw new Error('quota'); } storage.setItem(key, value); } };
+  assert.throws(() => restoreWorkspace(failing, old));
+  assert.equal(exportWorkspace(storage).data['fable-character'], next.data['fable-character']);
+});
