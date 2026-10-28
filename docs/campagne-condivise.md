@@ -15,7 +15,7 @@ python3 scripts/supabase-local.py dnd
 
 La guida locale `../tommyscave/docs/supabase-local.md` descrive le migrazioni condivise. Il database personale è versionato nella repository Tommy's Cave, separatamente da questa variante autonoma.
 Il wrapper passa `VITE_SUPABASE_DB_SCHEMA=dnd` senza scrivere credenziali. Le migrazioni qui presenti restano la variante autonoma in `public`, non vanno applicate al database condiviso.
-Nessun progetto Supabase ospitato è stato collegato. La scelta del progetto personale e dei limiti di spesa precede qualsiasi passo cloud.
+Il 28 ottobre 2026 il database personale condiviso è stato configurato nel progetto `bktjquoctxyajqdypidk`, organizzazione Personal, piano Free. La copia locale di Fable usa URL, chiave pubblica e schema `dnd` da `.env.local`, escluso da Git. Il wrapper di Tommy's Cave continua invece a selezionare esplicitamente lo stack OrbStack per i test locali. Nessun addon a pagamento è stato attivato.
 
 ## Variante autonoma per un nuovo progetto
 
@@ -34,7 +34,7 @@ Nessun progetto Supabase ospitato è stato collegato. La scelta del progetto per
 5. Esegui `npm ci` e `npm run build`, poi pubblica `dist/` su hosting statico. Le variabili sono incorporate nella build: impostarle soltanto dopo averla compilata non basta. Le policy CSP della build ammettono esclusivamente l'endpoint Supabase configurato e il suo WebSocket. Se usi il server Node incluso, il suo header CSP segue la stessa configurazione della build. Eventuali header CSP aggiunti dall'hosting devono consentire gli stessi indirizzi.
 6. Apri Campagna, registra un account e crea una campagna come master. Copia l'invito. Da un altro browser registra un giocatore, apri il link, inserisci il nome al tavolo e partecipa. Pubblica una scheda con lo stesso regolamento della campagna. Una modifica ai tratti o ai PF deve comparire nella vista del master.
 
-L'integrazione non è stata applicata ad alcun progetto Supabase remoto.
+La variante autonoma in `public` non è stata applicata al progetto personale, che usa le migrazioni condivise di Tommy's Cave nello schema `dnd`. Le chiavi API legacy sono disabilitate sul progetto personale; usare la chiave publishable.
 
 ## Come funziona
 
