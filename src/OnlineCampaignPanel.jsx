@@ -93,6 +93,26 @@ export default function OnlineCampaignPanel({ cloud, character, localCampaign, o
           </div>
         </details>
       </>}
+      <p><a href="https://tommyscave.top/privacy.html">{t('Privacy e dati personali')}</a> · <a href="https://tommyscave.top/legal.html">{t('Licenze e condizioni')}</a></p>
+      {cloud.session && <details><summary>{t('Gestisci i dati del tuo account')}</summary>
+        <p>{t('Esporta i dati cloud prima di eliminare l’account. I salvataggi locali restano su questo dispositivo.')}</p>
+        <button className="button secondary" disabled={busy} onClick={() => submit(async () => {
+          const data = await cloudResult(cloud.client.rpc('fable_export_account'));
+          const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+          const link = document.createElement('a'); link.href = url; link.download = 'tommyscave-account.json'; link.click();
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+        })}>{t('Esporta dati cloud')}</button>
+        <button className="button secondary" disabled={busy} onClick={() => {
+          const email = window.prompt(t('Eliminazione definitiva da tutti i servizi: rimuove account, sorgenti, schede e campagne create da te, comprese le condivisioni degli altri giocatori. Per confermare scrivi la tua email.'));
+          if (!email || email !== cloud.session.user.email) return;
+          if (!window.confirm(t('Hai esportato i dati da conservare? Confermi la cancellazione definitiva dell’account?'))) return;
+          submit(async () => {
+            await cloudResult(cloud.client.rpc('fable_delete_account'));
+            await cloud.client.auth.signOut({ scope: 'local' });
+            cloud.disconnect(); setMessage(t('Account eliminato. I salvataggi locali restano sul dispositivo.'));
+          });
+        }}>{t('Elimina account e dati cloud')}</button>
+      </details>}
       {message && <p role="status">{message}</p>}
       {cloud.error && <div role="alert" className="session-error"><p>{t(cloud.error)}</p>{cloud.session && <button className="button secondary" disabled={busy} onClick={() => cloud.retry().catch(() => {})}><RefreshCw size={14}/>{t('Riprova')}</button>}</div>}
     </div>
@@ -103,6 +123,10 @@ export default function OnlineCampaignPanel({ cloud, character, localCampaign, o
       {cloud.conflicts.map(row => <div className="panel online-conflict" role="alert" key={row.character_id}><h3>{t('Due versioni della scheda')} · {row.data.name}</h3><p>{t('Questo dispositivo e la scheda online contengono modifiche diverse. Scegli quale conservare prima di continuare la condivisione.')}</p><div className="online-actions"><button className="button secondary" disabled={busy} onClick={() => cloud.resolve(row, false).catch(() => {})}>{t('Usa versione online')}</button><button className="button primary" disabled={busy} onClick={() => cloud.resolve(row, true).catch(() => {})}>{t('Conserva versione locale')}</button></div></div>)}
       <SharedCampaignRoster cloud={cloud} onInspect={onInspect}/>
       {cloud.isDm && <section className="panel online-members"><h3>{t('Persone nella campagna')}</h3>{cloud.members.map(m => <div className="online-member" key={m.user_id}><span>{m.display_name}{m.user_id === cloud.campaign.owner_id ? ` · ${t('Master')}` : ''}</span>{m.user_id !== cloud.campaign.owner_id && <button className="button secondary" disabled={busy} onClick={() => submit(async () => { await cloudResult(cloud.client.rpc('fable_remove_member', { p_campaign: cloud.campaign.id, p_user: m.user_id })); await cloud.refresh(); })}>{t('Rimuovi dalla campagna')}</button>}</div>)}</section>}
+      {cloud.isDm && <button className="button secondary" disabled={busy} onClick={() => {
+        if (!window.confirm(t('Eliminare definitivamente questa campagna e tutte le schede condivise al suo interno? I salvataggi locali restano sui dispositivi.'))) return;
+        submit(async () => { await cloudResult(cloud.client.rpc('fable_delete_campaign', { p_campaign: cloud.campaign.id })); cloud.disconnect(); });
+      }}>{t('Elimina campagna')}</button>}
       <div className="online-actions"><button className="button secondary" onClick={cloud.disconnect}>{t('Torna alla campagna locale')}</button>{!cloud.isDm && <button className="button secondary" disabled={busy} onClick={() => submit(async () => { await cloudResult(cloud.client.rpc('fable_leave_campaign', { p_campaign: cloud.campaign.id })); cloud.disconnect(); })}>{t('Abbandona campagna')}</button>}</div>
     </>}
   </section>;
