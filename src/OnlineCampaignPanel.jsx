@@ -1,3 +1,4 @@
+import { exportCloudAccount, deleteCloudAccount } from './cloud-account.js';
 import React, { useState } from 'react';
 import { Cloud, Copy, Users, RefreshCw, BookOpen, LogOut, Shield, UserPlus, Link as LinkIcon } from 'lucide-react';
 import { useTranslation } from './i18n.jsx';
@@ -97,7 +98,7 @@ export default function OnlineCampaignPanel({ cloud, character, localCampaign, o
       {cloud.session && <details><summary>{t('Gestisci i dati del tuo account')}</summary>
         <p>{t('Esporta i dati cloud prima di eliminare l’account. I salvataggi locali restano su questo dispositivo.')}</p>
         <button className="button secondary" disabled={busy} onClick={() => submit(async () => {
-          const data = await cloudResult(cloud.client.rpc('fable_export_account'));
+          const data = await exportCloudAccount(cloud.client);
           const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
           const link = document.createElement('a'); link.href = url; link.download = 'tommyscave-account.json'; link.click();
           setTimeout(() => URL.revokeObjectURL(url), 1000);
@@ -107,7 +108,7 @@ export default function OnlineCampaignPanel({ cloud, character, localCampaign, o
           if (!email || email !== cloud.session.user.email) return;
           if (!window.confirm(t('Hai esportato i dati da conservare? Confermi la cancellazione definitiva dell’account?'))) return;
           submit(async () => {
-            await cloudResult(cloud.client.rpc('fable_delete_account'));
+            await deleteCloudAccount(cloud.client);
             await cloud.client.auth.signOut({ scope: 'local' });
             cloud.disconnect(); setMessage(t('Account eliminato. I salvataggi locali restano sul dispositivo.'));
           });
