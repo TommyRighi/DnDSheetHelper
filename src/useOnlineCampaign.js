@@ -1,3 +1,4 @@
+import { allCloudRows } from './cloud-pagination.js';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { getCloudClient, cloudResult, saveSharedSheet, cloudErrorMessage } from './cloud-client.js';
 import { fingerprint, readSyncLinks, sharedCharacter, syncAction } from './cloud-sync.js';
@@ -70,14 +71,14 @@ export default function useOnlineCampaign({ character, characters, onReceive, en
   const refresh = useCallback(async () => {
     if (!client || !userId || !online) return;
     const key = `${userId}:${selectedId}`;
-    const list = await cloudResult(client.from('fable_campaigns').select('*').order('created_at'));
+    const list = await allCloudRows((from, to) => client.from('fable_campaigns').select('*').order('created_at').order('id').range(from, to));
     if (identityRef.current !== key) return;
     setCampaigns(list);
     const selected = list.find(c => c.id === selectedId);
     if (!selected) { setSheets([]); setMembers([]); setToken(''); return; }
     const [rows, people, invites] = await Promise.all([
-      cloudResult(client.from('fable_sheets').select('*').eq('campaign_id', selectedId)),
-      cloudResult(client.from('fable_members').select('*').eq('campaign_id', selectedId)),
+      allCloudRows((from, to) => client.from('fable_sheets').select('*').eq('campaign_id', selectedId).order('owner_id').order('character_id').range(from, to)),
+      allCloudRows((from, to) => client.from('fable_members').select('*').eq('campaign_id', selectedId).order('user_id').range(from, to)),
       selected.owner_id === userId ? cloudResult(client.from('fable_invites').select('token').eq('campaign_id', selectedId).single()) : Promise.resolve(null),
     ]);
     if (identityRef.current !== key) return;
